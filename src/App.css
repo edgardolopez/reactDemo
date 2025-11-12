@@ -1,0 +1,96 @@
+.react-app {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 20px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 12px;
+  margin: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.react-app h1 {
+  color: #fff;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2.5em;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.counter-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  margin: 20px 0;
+  backdrop-filter: blur(10px);
+}
+
+.counter-section h2 {
+  margin-bottom: 20px;
+  font-size: 2em;
+}
+
+.counter-section button {
+  margin: 0 10px;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.increment-btn {
+  background: #4CAF50;
+  color: white;
+}
+
+.increment-btn:hover {
+  background: #45a049;
+  transform: translateY(-2px);
+}
+
+.decrement-btn {
+  background: #f44336;
+  color: white;
+}
+
+.decrement-btn:hover {
+  background: #da190b;
+  transform: translateY(-2px);
+}
+
+.reset-btn {
+  background: #ff9800;
+  color: white;
+}
+
+.reset-btn:hover {
+  background: #e68900;
+  transform: translateY(-2px);
+}
+
+.info-section {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px;
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.info-section h3 {
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+.info-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.info-section li {
+  margin: 8px 0;
+  padding: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+}
