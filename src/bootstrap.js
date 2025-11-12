@@ -44,13 +44,11 @@ if (typeof globalThis !== 'undefined') {
   console.log('🔧 React MFE mount function registered globally on globalThis');
 }
 
-// Auto-mount para desarrollo standalone
-if (process.env.NODE_ENV === 'development') {
-  const devRoot = document.getElementById('root');
-  if (devRoot) {
-    console.log('🔧 Dev mode: mounting to #root');
-    mount(devRoot);
-  }
+// Auto-mount para desarrollo standalone y producción
+const autoRoot = document.getElementById('root');
+if (autoRoot) {
+  console.log('🔧 Auto-mounting to #root');
+  mount(autoRoot);
 }
 
 console.log('🔧 Exporting mount function as default');
