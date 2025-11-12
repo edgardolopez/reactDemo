@@ -6,9 +6,7 @@ function ReactComponent() {
 
   return (
     <div className="react-app">
-      <h1>🚀 React Microfrontend</h1>
-      <p>Este componente React está siendo cargado dentro de Angular!</p>
-
+      <h1>🚀 React </h1>
       <div className="counter-section">
         <h2>Contador React: {count}</h2>
         <button
@@ -29,16 +27,6 @@ function ReactComponent() {
         >
           Reset
         </button>
-      </div>
-
-      <div className="info-section">
-        <h3>Información:</h3>
-        <ul>
-          <li>✅ React 18 con createRoot</li>
-          <li>✅ Module Federation</li>
-          <li>✅ Integrado con Angular 14</li>
-          <li>✅ Puerto 3002</li>
-        </ul>
       </div>
     </div>
   );
