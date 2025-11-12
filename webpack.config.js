@@ -1,12 +1,10 @@
-const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
-// Updated configuration
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
-
+  
   return {
     mode: isProduction ? "production" : "development",
     entry: "./src/index.js",
@@ -17,11 +15,9 @@ module.exports = (env, argv) => {
       clean: true,
     },
     devServer: {
-      port: 3002,
+      port: 3000,
       historyApiFallback: true,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
+      open: true,
     },
     module: {
       rules: [
@@ -40,29 +36,9 @@ module.exports = (env, argv) => {
       ],
     },
     plugins: [
-      new ModuleFederationPlugin({
-        name: "reactApp",
-        filename: "remoteEntry.js",
-        exposes: {
-          "./ReactComponent": "./src/bootstrap.js",
-        },
-        shared: {
-          react: {
-            singleton: true,
-            eager: false,
-            requiredVersion: "^18.0.0",
-            strictVersion: false,
-          },
-          "react-dom": {
-            singleton: true,
-            eager: false,
-            requiredVersion: "^18.0.0",
-            strictVersion: false,
-          },
-        },
-      }),
       new HtmlWebpackPlugin({
         template: "./public/index.html",
+        title: "React Counter App",
       }),
       new CopyPlugin({
         patterns: [

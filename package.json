@@ -1,8 +1,8 @@
 {
   "homepage": "https://edgardolopez.github.io/reactDemo/",
-  "name": "react-mfe",
+  "name": "react-counter-app",
   "version": "1.0.0",
-  "description": "React Microfrontend",
+  "description": "Simple React Counter App for GitHub Pages",
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",

@@ -3,38 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>React Microfrontend</title>
+  <meta name="description" content="Simple React Counter App">
+  <title>React Counter App</title>
 </head>
 <body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
-
-  <script>
-    // Asegurar que la función global esté disponible inmediatamente
-    console.log('🔧 HTML script loaded - preparing global mount function');
-
-    window.ensureMountFunction = function() {
-      // Esta función será llamada después de que el módulo se cargue
-      if (!window.mountReactMFE && !globalThis.mountReactMFE) {
-        console.warn('⚠️ Mount function not found - creating fallback');
-
-        // Crear una función de fallback básica
-        const fallbackMount = (element) => {
-          if (element) {
-            element.innerHTML = '<div style="color: orange; padding: 16px; border: 1px solid orange;">React MFE: Global mount function fallback loaded, but main component not ready</div>';
-          }
-          return () => {};
-        };
-
-        window.mountReactMFE = fallbackMount;
-        globalThis.mountReactMFE = fallbackMount;
-      }
-    };
-
-    // Llamar después de un delay para asegurar que el módulo se haya cargado
-    setTimeout(() => {
-      window.ensureMountFunction();
-      console.log('🔍 Mount function type after delay:', typeof window.mountReactMFE);
-    }, 1000);
-  </script>
 </body>
 </html>
