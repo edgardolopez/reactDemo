@@ -6,7 +6,7 @@ const path = require('path');
 // Updated configuration
 module.exports = (env, argv) => {
   const isProduction = argv.mode === 'production';
-  
+
   return {
     mode: isProduction ? "production" : "development",
     entry: "./src/index.js",
