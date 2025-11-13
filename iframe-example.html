@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Comunicación con Iframe React</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .controls {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .controls h2 {
+            margin-top: 0;
+        }
+        .control-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+            font-weight: bold;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        button:hover {
+            background: #005a8b;
+        }
+        input, select {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        iframe {
+            width: 100%;
+            height: 600px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            background: white;
+        }
+        .status {
+            background: #e8f5e8;
+            border: 1px solid #4caf50;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+        .messages {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+        }
+        .message {
+            padding: 5px 0;
+            border-bottom: 1px solid #eee;
+            font-family: monospace;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Control de Iframe React Counter</h1>
+        
+        <div class="controls">
+            <h2>Controles de Comunicación</h2>
+            
+            <div class="control-group">
+                <label>Tema:</label>
+                <select id="themeSelect">
+                    <option value="dark">Oscuro</option>
+                    <option value="light">Claro</option>
+                </select>
+                <button onclick="changeTheme()">Cambiar Tema</button>
+            </div>
+            
+            <div class="control-group">
+                <label>Usuario:</label>
+                <input type="text" id="userName" placeholder="Nombre de usuario" value="Juan Pérez">
+                <button onclick="setUser()">Establecer Usuario</button>
+            </div>
+            
+            <div class="control-group">
+                <label>Contador:</label>
+                <input type="number" id="counterValue" placeholder="Valor" value="0" min="0">
+                <button onclick="setCount()">Establecer Valor</button>
+            </div>
+            
+            <div class="status" id="status">
+                Estado: Esperando conexión...
+            </div>
+        </div>
+
+        <!-- Iframe con tu aplicación React -->
+        <iframe 
+            id="reactApp" 
+            src="https://edgardolopez.github.io/reactDemo/"
+            title="React Counter App">
+        </iframe>
+
+        <div class="messages">
+            <h3>📨 Mensajes Recibidos:</h3>
+            <div id="messageLog"></div>
+        </div>
+    </div>
+
+    <script>
+        const iframe = document.getElementById('reactApp');
+        const status = document.getElementById('status');
+        const messageLog = document.getElementById('messageLog');
+
+        // Escuchar mensajes del iframe
+        window.addEventListener('message', (event) => {
+            // En producción, validar el origen
+            // if (event.origin !== 'https://edgardolopez.github.io') return;
+            
+            try {
+                const message = JSON.parse(event.data);
+                logMessage('Recibido', message);
+                
+                switch (message.type) {
+                    case 'IFRAME_READY':
+                        status.innerHTML = '✅ Estado: Iframe conectado y listo';
+                        status.style.background = '#e8f5e8';
+                        break;
+                    case 'COUNT_CHANGED':
+                        status.innerHTML = `🔢 Contador actualizado: ${message.payload.count} (${message.payload.action})`;
+                        break;
+                }
+            } catch (error) {
+                console.error('Error al parsear mensaje:', error);
+            }
+        });
+
+        // Funciones para enviar mensajes al iframe
+        function sendMessage(type, payload) {
+            const message = JSON.stringify({ type, payload });
+            iframe.contentWindow.postMessage(message, '*');
+            logMessage('Enviado', { type, payload });
+        }
+
+        function changeTheme() {
+            const theme = document.getElementById('themeSelect').value;
+            sendMessage('THEME_CHANGE', { theme });
+        }
+
+        function setUser() {
+            const userName = document.getElementById('userName').value;
+            sendMessage('USER_DATA', { name: userName, id: Date.now() });
+        }
+
+        function setCount() {
+            const count = parseInt(document.getElementById('counterValue').value);
+            sendMessage('SET_COUNT', { count });
+        }
+
+        // Función para loguear mensajes
+        function logMessage(direction, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            messageDiv.innerHTML = `
+                <strong>[${new Date().toLocaleTimeString()}]</strong> 
+                <span style="color: ${direction === 'Enviado' ? 'blue' : 'green'}">${direction}:</span> 
+                ${JSON.stringify(message, null, 2)}
+            `;
+            messageLog.appendChild(messageDiv);
+            messageLog.scrollTop = messageLog.scrollHeight;
+        }
+
+        // Esperar a que el iframe cargue
+        iframe.onload = function() {
+            status.innerHTML = '⏳ Estado: Iframe cargado, esperando conexión...';
+        };
+    </script>
+</body>
+</html>
