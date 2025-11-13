@@ -6,25 +6,25 @@ function Counter() {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // En el React app del iframe
+    // In the React app inside the iframe
     const handleMessage = (event) => {
-      // Validar origen (puedes cambiar esto por tu dominio específico)
-      // if (event.origin !== 'https://tu-dominio.com') return;
+      // Validate origin (you can change this to your specific domain)
+      // if (event.origin !== 'https://your-domain.com') return;
       
       try {
         const message = JSON.parse(event.data);
         
         switch (message.type) {
           case 'THEME_CHANGE':
-            // Cambiar tema en React
+            // Change theme in React
             setTheme(message.payload.theme);
             break;
           case 'USER_DATA':
-            // Procesar datos de usuario
+            // Process user data
             setUser(message.payload);
             break;
           case 'SET_COUNT':
-            // Permitir establecer el contador desde el padre
+            // Allow setting the counter from the parent
             setCount(message.payload.count);
             break;
           default:
@@ -37,7 +37,7 @@ function Counter() {
 
     window.addEventListener('message', handleMessage);
 
-    // Enviar mensaje de vuelta al parent
+    // Send message back to the parent that iframe is ready
     window.parent.postMessage(JSON.stringify({
       type: 'IFRAME_READY',
       payload: { status: 'ready', timestamp: Date.now() }
@@ -49,7 +49,7 @@ function Counter() {
     };
   }, []);
 
-  // Función para notificar cambios al padre
+  // Function to notify the parent of changes
   const notifyParent = (type, payload) => {
     window.parent.postMessage(JSON.stringify({
       type,
